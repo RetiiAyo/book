@@ -1144,6 +1144,8 @@ function library:AddWindow(title, options)
 				do -- Tab Elements
 
 					function tab_data:AddLabel(label_text) -- [Label]
+						local label_data = {}
+						
 						label_text = tostring(label_text or "New Label")
 
 						local label = Prefabs:FindFirstChild("Label"):Clone()
@@ -1152,8 +1154,14 @@ function library:AddWindow(title, options)
 						label.Text = label_text
 						label.Size = UDim2.new(0, gNameLen(label), 0, 20)
 						label.ZIndex = label.ZIndex + (windows * 10)
+						
+						--modified by RetiiAyo
+						
+						function label_data:Set(text)
+							label.Text = tostring(text)
+						end
 
-						return label
+						return label_data, label
 					end
 
 					function tab_data:AddButton(button_text, callback) -- [Button]
@@ -1226,6 +1234,7 @@ function library:AddWindow(title, options)
 					end
 
 					function tab_data:AddTextBox(textbox_text, callback, textbox_options)
+						
 						textbox_text = tostring(textbox_text or "New TextBox")
 						callback = typeof(callback) == "function" and callback or function()end
 						textbox_options = typeof(textbox_options) == "table" and textbox_options or {["clear"] = true}
